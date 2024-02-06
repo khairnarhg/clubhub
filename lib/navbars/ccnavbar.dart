@@ -1,3 +1,6 @@
+import 'package:club_hub/EventPlanning.dart';
+import 'package:club_hub/PostInvitation.dart';
+import 'package:club_hub/ReleasePR.dart';
 import 'package:club_hub/clubsinfo.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +16,25 @@ class CcNavBar extends StatelessWidget {
               title: Text('Clubs info'),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ClubsInfo()))),
-          ListTile(title: Text('Release PR'), onTap: () => {}),
+          ListTile(
+              title: Text('Release PR'),
+              onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ReleasePR()))
+                  }),
           ListTile(
             title: Text('Event Planning'),
-            onTap: () => print('Plan Karo'),
+            onTap: () =>{
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EventPlanning()))
+            },
           ),
           ListTile(
             title: Text('Post Invitation'),
+            // onTap: () =>{
+            //   Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => PostInvitation()))
+            //},
           ),
         ],
       ),

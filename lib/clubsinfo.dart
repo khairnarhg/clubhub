@@ -1,3 +1,4 @@
+import 'package:club_hub/membershipForm.dart';
 import 'package:flutter/material.dart';
 
 class ClubsInfo extends StatefulWidget {
@@ -8,6 +9,7 @@ class ClubsInfo extends StatefulWidget {
 }
 
 class _ClubsInfoState extends State<ClubsInfo> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,19 @@ class _ClubsInfoState extends State<ClubsInfo> {
                   'The Idea is to spread awareness, encourage students, staff and idustry professional,'
                   'inculcate enthusiasm to take up projects in this domain and solve real life problems of our society.'),
             ),
+            SizedBox(height: 10),
+            Center(
+              child: Text('CC members, staffs, community links'),
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => membershipForm()));
+                  },
+                  child: Text('Apply for membership')),
+            ),
             SizedBox(height: 25),
             Center(
               child: Image.asset('assets/nsslogo.png', width: 125, height: 125),
@@ -54,8 +69,7 @@ class _ClubsInfoState extends State<ClubsInfo> {
                   'offers students in Indian technical institutions, colleges, and universities the opportunity to engage in'
                   'government-led community service activities. Since its inception in 1969, NSS has seen significant growth,'
                   'with over 3.8 million students participating by March 2018. The NSS unit at Fr C. Rodrigues Institute of Technology,'
-                  ' active since the academic year 2019-2020, comprises 50 student members under Mumbai University, with the motto "NOT ME BUT YOU."'
-                  ),
+                  ' active since the academic year 2019-2020, comprises 50 student members under Mumbai University, with the motto "NOT ME BUT YOU."'),
             ),
           ],
         ),

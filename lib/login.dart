@@ -80,7 +80,7 @@ class _loginState extends State<login> {
 
     if (user != null) {
       String? uid = FirebaseAuth.instance.currentUser?.uid;
-      String? documentId = await fetchDataUsingUID(uid!);
+      String? documentId = await fetchDocIdUsingUID(uid!);
 
       if (documentId != null) {
         print('Document ID of the logged-in user: $documentId');
@@ -138,7 +138,7 @@ class _loginState extends State<login> {
     }
   }
 
-  Future<String?> fetchDataUsingUID(String uid) async {
+  Future<String?> fetchDocIdUsingUID(String uid) async {
     try {
       // Query for the document where the 'uid' field matches the user's UID
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -162,4 +162,5 @@ class _loginState extends State<login> {
       return null;
     }
   }
+  
 }

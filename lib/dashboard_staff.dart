@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashboardStaff extends StatefulWidget {
-  const DashboardStaff({super.key});
+  const DashboardStaff({Key? key})
+      : super(key: key);
 
   @override
   State<DashboardStaff> createState() => _DashboardStaffState();
