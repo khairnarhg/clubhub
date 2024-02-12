@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/Welcome.dart';
-import 'package:club_hub/navbars/staffnavbar.dart';
+import 'package:club_hub/welcome.dart';
+import 'package:club_hub/navbars/staff_navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,16 +16,16 @@ class _DashboardStaffState extends State<DashboardStaff> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: StaffNavbar(),
+      drawer: const StaffNavbar(),
       appBar: AppBar(
-        title: Text('Welcome Staff'),
+        title: const Text('Welcome Staff'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               FirebaseAuth.instance.signOut();
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Welcome()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Welcome()));
             },
           ),
         ],
@@ -42,12 +42,12 @@ class _DashboardStaffState extends State<DashboardStaff> {
               itemBuilder: (context, index) {
                 var post = posts[index];
                 return ListTile(
-                  title: Text('AIDL'), // Name of the person who posted
+                  title: const Text('AIDL'), // Name of the person who posted
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.network('${post['image']}'), // Image posted
-                      SizedBox(height: 8), // Spacer
+                      const SizedBox(height: 8), // Spacer
                       Text('${post['caption']}'), // Caption
                     ],
                   ),
@@ -55,7 +55,7 @@ class _DashboardStaffState extends State<DashboardStaff> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

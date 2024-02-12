@@ -46,18 +46,18 @@ class _PostInvitationState extends State<PostInvitation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post Invitation'),
+        title: const Text('Post Invitation'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Center(
+            const Center(
               child: Text(
                 'Pick an Image',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             images != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -65,24 +65,23 @@ class _PostInvitationState extends State<PostInvitation> {
                         width: 300, height: 300, fit: BoxFit.cover))
                 : Image.asset('assets/images/uploadphoto.png',
                     width: 300, height: 300),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () => getImage(ImageSource.gallery),
-              child: Text('Pick from gallery'),
+              child: const Text('Pick from gallery'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => getImage(ImageSource.camera),
-              child: Text('Click a photo'),
+              child: const Text('Click a photo'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () async {
                   if (images == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Please select an image')));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Please select an image')));
                   }
-                  ;
                   String uniquefilename =
                       DateTime.now().millisecondsSinceEpoch.toString();
                   Reference referenceRoot = FirebaseStorage.instance.ref();
@@ -98,17 +97,15 @@ class _PostInvitationState extends State<PostInvitation> {
                     );
                     imageUrl = await referenceImageatoUpload.getDownloadURL();
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Image uploaded')));
-
-                    
+                        const SnackBar(content: Text('Image uploaded')));
 
                     print(imageUrl);
                   } catch (error) {
                     print('error uploading file');
                   }
                 },
-                child: Text('upload')),
-            SizedBox(height: 50),
+                child: const Text('upload')),
+            const SizedBox(height: 50),
             Center(
               child: Form(
                 key: _formKey,
@@ -132,7 +129,7 @@ class _PostInvitationState extends State<PostInvitation> {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -146,15 +143,15 @@ class _PostInvitationState extends State<PostInvitation> {
                       .add(datatosend);
 
                   ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Posted')));
+                      .showSnackBar(const SnackBar(content: Text('Posted')));
                 }
 
                 Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Dashboard()));
+                            builder: (context) => DashboardStudent()));
               },
-              child: Text('Post'),
+              child: const Text('Post'),
             ),
           ],
         ),

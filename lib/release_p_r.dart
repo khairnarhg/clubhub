@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/PermissionRequestForm.dart';
+import 'package:club_hub/permission_request_form.dart';
 import 'package:flutter/material.dart';
 
 class ReleasePR extends StatefulWidget {
@@ -35,11 +35,13 @@ class _ReleasePRState extends State<ReleasePR> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PermissionRequestForm(staffmember: '${staffMember['collegeId']}',)));
+                              builder: (context) => PermissionRequestForm(
+                                    staffmember: '${staffMember['collegeId']}',
+                                  )));
                     });
               },
             );
-          }else{
+          } else {
             return CircularProgressIndicator();
           }
         },

@@ -11,14 +11,14 @@ class EventPlanning extends StatefulWidget {
 
 class _EventPlanningState extends State<EventPlanning> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _ename = TextEditingController();
-  TextEditingController _edate = TextEditingController();
-  TextEditingController _evenue = TextEditingController();
-  TextEditingController _etime = TextEditingController();
-  TextEditingController _einfra = TextEditingController();
-  TextEditingController _sname = TextEditingController();
-  TextEditingController _edesc = TextEditingController();
-  TextEditingController _efees = TextEditingController();
+  final TextEditingController _ename = TextEditingController();
+  final TextEditingController _edate = TextEditingController();
+  final TextEditingController _evenue = TextEditingController();
+  final TextEditingController _etime = TextEditingController();
+  final TextEditingController _einfra = TextEditingController();
+  final TextEditingController _sname = TextEditingController();
+  final TextEditingController _edesc = TextEditingController();
+  final TextEditingController _efees = TextEditingController();
 
   @override
   void dispose() {
@@ -37,7 +37,7 @@ class _EventPlanningState extends State<EventPlanning> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Planning'),
+        title: const Text('Event Planning'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -46,7 +46,7 @@ class _EventPlanningState extends State<EventPlanning> {
             children: <Widget>[
               TextFormField(
                 controller: _ename,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event Name',
                 ),
                 validator: (value) {
@@ -58,7 +58,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _edate,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event Date',
                 ),
                 validator: (value) {
@@ -70,7 +70,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _evenue,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event Venue',
                 ),
                 validator: (value) {
@@ -82,7 +82,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _etime,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event time',
                 ),
                 validator: (value) {
@@ -94,7 +94,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _einfra,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Extra Infrastructure',
                 ),
                 validator: (value) {
@@ -106,7 +106,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _sname,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Speaker Name',
                 ),
                 validator: (value) {
@@ -118,7 +118,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _edesc,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event  Description',
                 ),
                 validator: (value) {
@@ -130,7 +130,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               TextFormField(
                 controller: _efees,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Event  fees',
                 ),
                 validator: (value) {
@@ -141,7 +141,7 @@ class _EventPlanningState extends State<EventPlanning> {
                 },
               ),
               ElevatedButton(
-                onPressed: ()async {
+                onPressed: () async {
                   String eventname = _ename.text;
                   String eventdate = _edate.text;
                   String eventvenue = _evenue.text;
@@ -162,31 +162,27 @@ class _EventPlanningState extends State<EventPlanning> {
                     eventfees: eventfees,
                   );
 
-              await FirebaseFirestore.instance
-                  .collection('Event_info')
-                  .add({
-                'eventName': request.eventname,
-                'eventdate': request.eventdate,
-                'eventvenue': request.eventvenue,
-                'eventtime': request.eventtime,
-                'eventinfra': request.eventinfra,
-                'speakername': request.speakername,
-                'eventdesc': request.eventdesc,
-                'eventfees': request.eventfees,
-              });
-              if (_formKey.currentState!.validate()) {
-      
-                print('database created');
-                
-              } else {
-                print('Some error occured');
-              }
-              Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardCc()));
+                  await FirebaseFirestore.instance
+                      .collection('Event_info')
+                      .add({
+                    'eventName': request.eventname,
+                    'eventdate': request.eventdate,
+                    'eventvenue': request.eventvenue,
+                    'eventtime': request.eventtime,
+                    'eventinfra': request.eventinfra,
+                    'speakername': request.speakername,
+                    'eventdesc': request.eventdesc,
+                    'eventfees': request.eventfees,
+                  });
+                  if (_formKey.currentState!.validate()) {
+                    print('database created');
+                  } else {
+                    print('Some error occured');
+                  }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DashboardCc()));
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),

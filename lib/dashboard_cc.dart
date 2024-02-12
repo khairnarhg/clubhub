@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/Welcome.dart';
-import 'package:club_hub/navbars/ccnavbar.dart';
+import 'package:club_hub/welcome.dart';
+import 'package:club_hub/navbars/cc_navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +15,16 @@ class _DashboardCcState extends State<DashboardCc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CcNavBar(),
+      drawer: const CcNavbar(),
       appBar: AppBar(
-        title: Text('Welcome CC member'),
+        title: const Text('Welcome CC member'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed:(){
+            icon: const Icon(Icons.logout),
+            onPressed: () {
               FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Welcome()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Welcome()));
             },
           ),
         ],
@@ -41,12 +41,12 @@ class _DashboardCcState extends State<DashboardCc> {
               itemBuilder: (context, index) {
                 var post = posts[index];
                 return ListTile(
-                  title: Text('AIDL'), // Name of the person who posted
+                  title: const Text('AIDL'), // Name of the person who posted
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.network('${post['image']}'), // Image posted
-                      SizedBox(height: 8), // Spacer
+                      const SizedBox(height: 8), // Spacer
                       Text('${post['caption']}'), // Caption
                     ],
                   ),
@@ -54,7 +54,7 @@ class _DashboardCcState extends State<DashboardCc> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

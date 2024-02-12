@@ -5,18 +5,18 @@ import "package:club_hub/firebase_auth_services.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
-class login extends StatefulWidget {
-  const login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
+class _LoginState extends State<Login> {
   final FirebaseAuthService _auth = FirebaseAuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _pass = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _pass = TextEditingController();
 
   @override
   void dispose() {
@@ -29,7 +29,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Form(
@@ -38,7 +38,7 @@ class _loginState extends State<login> {
             children: <Widget>[
               TextFormField(
                 controller: _email,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'E-mail Id',
                 ),
                 validator: (value) {
@@ -50,7 +50,7 @@ class _loginState extends State<login> {
               ),
               TextFormField(
                 controller: _pass,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                 ),
                 validator: (value) {
@@ -62,7 +62,7 @@ class _loginState extends State<login> {
               ),
               ElevatedButton(
                 onPressed: _signIn,
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),
@@ -108,19 +108,17 @@ class _loginState extends State<login> {
         // Retrieve data from the document
         Map<String, dynamic> userData = userSnapshot.data()!;
         String? role = userData['role'];
-        
+
         // Use the retrieved data
         print('Role: $role');
 
-        if(role=='Student'){
-          Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+        if (role == 'Student') {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DashboardStudent()));
+        } else {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DashboardStaff()));
         }
-        if(role=='Staff'){
-          Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DashboardStaff()));
-        }
-        
 
         // Return the document ID
         return userSnapshot.id;
@@ -158,5 +156,4 @@ class _loginState extends State<login> {
       return null;
     }
   }
-  
 }

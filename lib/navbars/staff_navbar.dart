@@ -1,6 +1,5 @@
-
-import 'package:club_hub/OpenPrs.dart';
-import 'package:club_hub/clubsinfo.dart';
+import 'package:club_hub/open_prs.dart';
+import 'package:club_hub/clubs_info.dart';
 import 'package:flutter/material.dart';
 
 class StaffNavbar extends StatelessWidget {
@@ -14,12 +13,11 @@ class StaffNavbar extends StatelessWidget {
           ListTile(
               title: Text('Clubs info'),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ClubsInfo()))
-                  ),
+                  MaterialPageRoute(builder: (context) => ClubsInfo()))),
           ListTile(
               title: Text('Open PRs'),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => OpenPrs()))),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => OpenPrs()))),
         ],
       ),
     );

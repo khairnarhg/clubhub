@@ -1,5 +1,4 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import the cloud_firestore package
 import 'package:club_hub/event_planning.dart';
 import 'package:club_hub/post_invitation.dart';
 import 'package:club_hub/release_p_r.dart';
@@ -7,23 +6,22 @@ import 'package:club_hub/clubs_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class stNavbar extends StatefulWidget {
-  const stNavbar({super.key});
+class StudentNavbar extends StatefulWidget {
+  const StudentNavbar({super.key});
 
   @override
-  State<stNavbar> createState() => _stNavbarState();
+  State<StudentNavbar> createState() => _StudentNavbarState();
 }
 
-class _stNavbarState extends State<stNavbar> {
+class _StudentNavbarState extends State<StudentNavbar> {
   late String currentUserId;
   bool isCoreCommitteeMember = false;
 
- @override
-  void initState(){
+  @override
+  void initState() {
     super.initState();
     getCurrentUserId();
- }
-  
+  }
 
   Future<void> getCurrentUserId() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -32,9 +30,8 @@ class _stNavbarState extends State<stNavbar> {
         currentUserId = user.uid;
       });
       print(currentUserId);
-      await checkccMember(currentUserId);
-    } 
-    
+      await checkccMember(currentUserId); // Call the checkccMember method
+    }
   }
 
   Future<void> checkccMember(String currentUserId) async {
@@ -42,15 +39,16 @@ class _stNavbarState extends State<stNavbar> {
       // Query the clubs collection to find documents where currentUserId is present in cc_members subcollection
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
-              .collectionGroup('cc_members')
-              .where('user_Id', isEqualTo: currentUserId)
+              .collection('clubs') // Use the clubs collection
+              .where('cc_members',
+                  arrayContains: currentUserId) // Filter by the current user ID
               .get();
 
       // Check if any club documents are returned
       if (querySnapshot.docs.isNotEmpty) {
         // User is a core committee member of at least one club
         // Set the isCoreCommitteeMember flag to true
-        
+
         setState(() {
           isCoreCommitteeMember = true;
         });
@@ -67,26 +65,25 @@ class _stNavbarState extends State<stNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Drawer(
       child: ListView(
         children: [
           ListTile(
-            title: Text('Clubs info'),
+            title: const Text('Clubs info'),
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ClubsInfo()),
+              MaterialPageRoute(builder: (context) => const ClubsInfo()),
             ),
           ),
           ListTile(
-            title: Text('Membership History'),
+            title: const Text('Membership History'),
             onTap: () => print('clubs'),
           ),
           ListTile(
-            title: Text('Post Invitation'),
+            title: const Text('Post Invitation'),
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PostInvitation()),
+              MaterialPageRoute(builder: (context) => const PostInvitation()),
             ),
           ),
           // Display the current user's ID
@@ -94,23 +91,27 @@ class _stNavbarState extends State<stNavbar> {
             title: Text('Current User ID: $currentUserId'),
           ),
           ListTile(
-              title: Text('Release PR'),
+              title: const Text('Release PR'),
               onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ReleasePR()))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ReleasePR()))
                   }),
           ListTile(
-            title: Text('Event Planning'),
+            title: const Text('Event Planning'),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventPlanning()))
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EventPlanning()))
             },
           ),
-          
+
           // Add a ListTile for cc management if the user is a core committee member
           if (isCoreCommitteeMember)
             ListTile(
-              title: Text('CC Management'),
+              title: const Text('CC Management'),
               onTap: () {
                 // Handle navigation or any action when the ListTile is tapped
               },
