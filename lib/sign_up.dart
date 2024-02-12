@@ -1,4 +1,4 @@
-import 'package:club_hub/Welcome.dart';
+import 'package:club_hub/welcome.dart';
 import 'package:club_hub/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _email = TextEditingController();
   TextEditingController _pass = TextEditingController();
 
-  final _rolList = ["Student", "Core Committee", "Staff"];
+  final _rolList = ["Student", "Staff"];
   String? _selectedVal = "Student";
 
   @override
@@ -142,7 +142,8 @@ class _SignUpState extends State<SignUp> {
     //User? user = await _auth.signUpWithEmailAndPassword(email, password);
 
     if (_formKey.currentState!.validate()) {
-      _auth.signUpWithEmailAndPassword(email, password, collegeidno, name, _selectedVal);
+      _auth.signUpWithEmailAndPassword(
+          email, password, collegeidno, name, _selectedVal);
       print('User is successfully created');
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Welcome()));

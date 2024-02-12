@@ -1,4 +1,4 @@
-import "package:club_hub/SignUp.dart";
+import 'package:club_hub/sign_up.dart';
 import "package:club_hub/login.dart";
 import "package:flutter/material.dart";
 
@@ -14,7 +14,7 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to ClubHub'),
+        title: const Text('Welcome to ClubHub'),
       ),
       body: Center(
         child: Column(
@@ -22,17 +22,17 @@ class _WelcomeState extends State<Welcome> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SignUp()));
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => login()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Login()));
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
           ],
         ),

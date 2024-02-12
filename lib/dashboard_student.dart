@@ -1,31 +1,33 @@
+import 'package:club_hub/comment_screen.dart';
+import 'package:club_hub/navbars/student_navbar.dart';
+import 'package:club_hub/welcome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/Welcome.dart';
-import 'package:club_hub/navbars/StudentNavbar.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class DashboardStudent extends StatefulWidget {
+  const DashboardStudent({Key? key}) : super(key: key);
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<DashboardStudent> createState() => DashboardStudentState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class DashboardStudentState extends State<DashboardStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: StudentNavbar(),
+      drawer: const StudentNavbar(),
       appBar: AppBar(
-        title: Text('Welcome student'),
+        title: const Text('Welcome student'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Welcome()));
+                context,
+                MaterialPageRoute(builder: (context) => const Welcome()),
+              );
             },
           ),
         ],
@@ -40,22 +42,31 @@ class _DashboardState extends State<Dashboard> {
             return ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                var post = posts[index];
+                QueryDocumentSnapshot post = posts[index];
                 return ListTile(
-                  title: Text('AIDL'), // Name of the person who posted
+                  title: Text(post['title']),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.network('${post['image']}'), // Image posted
-                      SizedBox(height: 8), // Spacer
-                      Text('${post['caption']}'), // Caption
+                      Image.network(post['image']),
+                      const SizedBox(height: 8),
+                      Text(post['caption']),
                     ],
                   ),
+                  // Add an onTap callback to navigate to the comment screen.
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommentScreen(post: post),
+                      ),
+                    );
+                  },
                 );
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

@@ -1,11 +1,11 @@
-import 'package:club_hub/EventPlanning.dart';
-import 'package:club_hub/PostInvitation.dart';
-import 'package:club_hub/ReleasePR.dart';
-import 'package:club_hub/clubsinfo.dart';
+import 'package:club_hub/event_planning.dart';
+import 'package:club_hub/post_invitation.dart';
+import 'package:club_hub/release_p_r.dart';
+import 'package:club_hub/clubs_info.dart';
 import 'package:flutter/material.dart';
 
-class CcNavBar extends StatelessWidget {
-  const CcNavBar({super.key});
+class CcNavbar extends StatelessWidget {
+  const CcNavbar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,14 @@ class CcNavBar extends StatelessWidget {
                   }),
           ListTile(
             title: Text('Event Planning'),
-            onTap: () =>{
+            onTap: () => {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => EventPlanning()))
             },
           ),
           ListTile(
             title: Text('Post Invitation'),
-            onTap: () =>{
+            onTap: () => {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PostInvitation()))
             },
