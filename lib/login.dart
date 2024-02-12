@@ -1,5 +1,4 @@
 import "package:cloud_firestore/cloud_firestore.dart";
-import "package:club_hub/dashboard_cc.dart";
 import "package:club_hub/dashboard_staff.dart";
 import "package:club_hub/dashboard_student.dart";
 import "package:club_hub/firebase_auth_services.dart";
@@ -117,14 +116,11 @@ class _loginState extends State<login> {
           Navigator.push(
           context, MaterialPageRoute(builder: (context) => Dashboard()));
         }
-        else if(role=='Staff'){
+        if(role=='Staff'){
           Navigator.push(
           context, MaterialPageRoute(builder: (context) => DashboardStaff()));
         }
-        else{
-          Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DashboardCc()));
-        }
+        
 
         // Return the document ID
         return userSnapshot.id;

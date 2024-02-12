@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club_hub/Welcome.dart';
 import 'package:club_hub/navbars/StudentNavbar.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: StudentNavbar(),
+      drawer: stNavbar(),
       appBar: AppBar(
         title: Text('Welcome student'),
         actions: [

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:club_hub/dashboard_student.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -77,10 +78,11 @@ class _PostInvitationState extends State<PostInvitation> {
             SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () async {
-                  if (images == null){
+                  if (images == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please select an image')));
-                  };
+                        SnackBar(content: Text('Please select an image')));
+                  }
+                  ;
                   String uniquefilename =
                       DateTime.now().millisecondsSinceEpoch.toString();
                   Reference referenceRoot = FirebaseStorage.instance.ref();
@@ -96,14 +98,14 @@ class _PostInvitationState extends State<PostInvitation> {
                     );
                     imageUrl = await referenceImageatoUpload.getDownloadURL();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Image uploaded')));
+                        SnackBar(content: Text('Image uploaded')));
 
                     
+
                     print(imageUrl);
                   } catch (error) {
                     print('error uploading file');
                   }
-                 
                 },
                 child: Text('upload')),
             SizedBox(height: 50),
@@ -143,9 +145,14 @@ class _PostInvitationState extends State<PostInvitation> {
                       .collection('Invitations')
                       .add(datatosend);
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Posted')));
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Posted')));
                 }
+
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Dashboard()));
               },
               child: Text('Post'),
             ),
@@ -154,6 +161,4 @@ class _PostInvitationState extends State<PostInvitation> {
       ),
     );
   }
-
-  
 }
