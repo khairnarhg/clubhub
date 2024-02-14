@@ -1,5 +1,4 @@
 import "package:cloud_firestore/cloud_firestore.dart";
-import "package:club_hub/dashboard_cc.dart";
 import "package:club_hub/dashboard_staff.dart";
 import "package:club_hub/dashboard_student.dart";
 import "package:club_hub/firebase_auth_services.dart";

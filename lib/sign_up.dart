@@ -123,7 +123,7 @@ class _SignUpState extends State<SignUp> {
 
   bool _isValidEmail(String email) {
     // Use a regular expression to check if the email has the correct domain
-    if (_selectedVal == 'Student' || _selectedVal == 'Core Committee') {
+    if (_selectedVal == 'Student' ) {
       RegExp emailRegex1 =
           RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.fcrit\.ac\.in$');
       return emailRegex1.hasMatch(email);

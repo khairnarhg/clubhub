@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:club_hub/dashboard_student.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,6 +145,11 @@ class _PostInvitationState extends State<PostInvitation> {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(const SnackBar(content: Text('Posted')));
                 }
+
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardStudent()));
               },
               child: const Text('Post'),
             ),
