@@ -1,5 +1,5 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:club_hub/cc_management.dart';
 import 'package:club_hub/event_planning.dart';
 import 'package:club_hub/post_invitation.dart';
 import 'package:club_hub/release_p_r.dart';
@@ -15,59 +15,82 @@ class stNavbar extends StatefulWidget {
 }
 
 class _stNavbarState extends State<stNavbar> {
-  late String currentUserId;
-  bool isCoreCommitteeMember = false;
-
- @override
-  void initState(){
-    super.initState();
-    getCurrentUserId();
- }
-  
-
-  Future<void> getCurrentUserId() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      setState(() {
-        currentUserId = user.uid;
-      });
-      print(currentUserId);
-      await checkccMember(currentUserId);
-    } 
-    
-  }
-
-  Future<void> checkccMember(String currentUserId) async {
+  Future<String?> fetchDocIdUsingUID(String uid) async {
     try {
-      // Query the clubs collection to find documents where currentUserId is present in cc_members subcollection
+      // Query for the document where the 'uid' field matches the user's UID
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
-              .collectionGroup('cc_members')
-              .where('user_Id', isEqualTo: currentUserId)
+              .collection('users')
+              .where('user_ID', isEqualTo: uid)
               .get();
 
-      // Check if any club documents are returned
+      // Check if any documents were found
       if (querySnapshot.docs.isNotEmpty) {
-        // User is a core committee member of at least one club
-        // Set the isCoreCommitteeMember flag to true
-        
-        setState(() {
-          isCoreCommitteeMember = true;
-        });
-        print('User is a core committee member of at least one club');
+        // Assuming there's only one document, get its ID
+        String documentId = querySnapshot.docs.first.id;
+        print('Document ID found for the user: $documentId');
+        return documentId;
       } else {
-        print(querySnapshot.docs);
-        // User is not a core committee member of any club
-        print('User is not a core committee member of any club');
+        print('Document does not exist for the user');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching document: $e');
+      return null;
+    }
+  }
+
+  Future<bool> checkSubcollection(
+      String documentId, String subcollectionName) async {
+    try {
+      // Get the reference to the document of the current user
+      DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(documentId);
+
+      // Get a snapshot of the document
+      DocumentSnapshot userDocSnapshot = await userDocRef.get();
+
+      // Check if the document exists
+      if (userDocSnapshot.exists) {
+        // Check if the subcollection exists in the document
+        CollectionReference subcollectionRef =
+            userDocRef.collection(subcollectionName);
+        QuerySnapshot subcollectionSnapshot =
+            await subcollectionRef.limit(1).get();
+        return subcollectionSnapshot.docs.isNotEmpty;
+      } else {
+        // Document does not exist
+        print('Document does not exist for user');
+        return false;
       }
     } catch (error) {
-      print('Error checking membership: $error');
+      print('Error checking subcollection: $error');
+      return false;
     }
+  }
+
+  void showNotMemberDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //title: Text('Not a Core Committee Member'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Drawer(
       child: ListView(
         children: [
@@ -80,7 +103,18 @@ class _stNavbarState extends State<stNavbar> {
           ),
           ListTile(
             title: Text('Membership History'),
-            onTap: () => print('clubs'),
+            onTap: () async {
+              String? user_Id = FirebaseAuth.instance.currentUser?.uid;
+              String? DocumentId = await fetchDocIdUsingUID(user_Id!);
+              bool is_member =
+                  await checkSubcollection(DocumentId!, 'membership_info');
+              print(is_member);
+              if (is_member == true) {
+              } else {
+                showNotMemberDialog(
+                    context, 'You are not a member of any club');
+              }
+            },
           ),
           ListTile(
             title: Text('Post Invitation'),
@@ -90,9 +124,7 @@ class _stNavbarState extends State<stNavbar> {
             ),
           ),
           // Display the current user's ID
-          ListTile(
-            title: Text('Current User ID: $currentUserId'),
-          ),
+
           ListTile(
               title: Text('Release PR'),
               onTap: () => {
@@ -106,15 +138,25 @@ class _stNavbarState extends State<stNavbar> {
                   MaterialPageRoute(builder: (context) => EventPlanning()))
             },
           ),
-          
+
           // Add a ListTile for cc management if the user is a core committee member
-          if (isCoreCommitteeMember)
-            ListTile(
-              title: Text('CC Management'),
-              onTap: () {
-                // Handle navigation or any action when the ListTile is tapped
-              },
-            ),
+
+          ListTile(
+            title: Text('CC Management'),
+            onTap: () async {
+              String? user_Id = FirebaseAuth.instance.currentUser?.uid;
+              String? DocumentId = await fetchDocIdUsingUID(user_Id!);
+              bool is_ccmember =
+                  await checkSubcollection(DocumentId!, 'cc_info');
+              print(is_ccmember);
+              if (is_ccmember == true) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ccManagement(docuementId: DocumentId ,)));
+              } else {
+                showNotMemberDialog(context, 'You are not a member of any cc');
+              }
+            },
+          ),
         ],
       ),
     );
