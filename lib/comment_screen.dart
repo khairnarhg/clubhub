@@ -42,9 +42,9 @@ class _CommentScreenState extends State<CommentScreen> {
 
   void addComment() async {
     User? user = FirebaseAuth.instance.currentUser;
-    String user_Id = user!.uid;
+    String user_id = user!.uid;
     DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(user_Id).get();
+        await FirebaseFirestore.instance.collection('users').doc(user_id).get();
 
     if (!userDoc.exists) {
       // Handle the case where the user document does not exist
@@ -61,7 +61,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
     String fullName = userData['fullName'];
     await FirebaseFirestore.instance.collection('comments').add({
-      'authorId': user_Id,
+      'authorId': user_id,
       'authorName': fullName,
       'postId': widget.post.id,
       'content': _commentController.text,
@@ -134,11 +134,11 @@ class _CommentScreenState extends State<CommentScreen> {
       trailing: document['authorId'] == FirebaseAuth.instance.currentUser!.uid
           ? PopupMenuButton<int>(
               itemBuilder: (context) => [
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 1,
                   child: Text('Edit'),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: 2,
                   child: Text('Delete'),
                 ),

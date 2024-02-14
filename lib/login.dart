@@ -114,11 +114,13 @@ class _LoginState extends State<Login> {
         print('Role: $role');
 
         if (role == 'Student') {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DashboardStudent()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const DashboardStudent()));
         } else {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DashboardStaff()));
+              MaterialPageRoute(builder: (context) => const DashboardStaff()));
         }
 
         // Return the document ID

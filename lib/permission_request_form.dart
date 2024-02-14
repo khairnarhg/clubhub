@@ -20,18 +20,18 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create PR'),
+        title: const Text('Create PR'),
       ),
       body: Column(
         children: <Widget>[
           TextFormField(
             controller: _subject,
-            decoration: InputDecoration(labelText: 'Subject'),
+            decoration: const InputDecoration(labelText: 'Subject'),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           TextFormField(
             controller: _description,
-            decoration: InputDecoration(labelText: 'Description'),
+            decoration: const InputDecoration(labelText: 'Description'),
             maxLines: null,
           ),
           ElevatedButton(
@@ -61,12 +61,10 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
                 'ccmemberId': request.ccmemberId,
               });
 
-              Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardCc()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DashboardCc()));
             },
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
         ],
       ),

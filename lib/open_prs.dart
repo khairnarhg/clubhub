@@ -16,7 +16,7 @@ class _OpenPrsState extends State<OpenPrs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Open Prs'),
+        title: const Text('Open Prs'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -54,7 +54,7 @@ class _OpenPrsState extends State<OpenPrs> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),
@@ -66,7 +66,7 @@ class PermissionRequestDetailsScreen extends StatelessWidget {
   final String documentId;
   final String description;
 
-  PermissionRequestDetailsScreen({
+  const PermissionRequestDetailsScreen({
     required this.documentId,
     required this.description,
   });
@@ -75,22 +75,24 @@ class PermissionRequestDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Permission Request Details'),
+        title: const Text('Permission Request Details'),
       ),
       body: Column(
         children: <Widget>[
           Center(
             child: Text('Description:' + description),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // Handle approval logic, e.g., update Firestore document status
               approvePermissionRequest(documentId);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DashboardStaff()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DashboardStaff()));
             },
-            child: Text('Approve'),
+            child: const Text('Approve'),
           ),
         ],
       ),

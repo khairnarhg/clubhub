@@ -14,7 +14,7 @@ class _ReleasePRState extends State<ReleasePR> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select the staff member'),
+        title: const Text('Select the staff member'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -42,7 +42,7 @@ class _ReleasePRState extends State<ReleasePR> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

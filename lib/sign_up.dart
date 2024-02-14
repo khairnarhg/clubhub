@@ -13,10 +13,10 @@ class _SignUpState extends State<SignUp> {
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _name = TextEditingController();
-  TextEditingController _idno = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _pass = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _idno = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _pass = TextEditingController();
 
   final _rolList = ["Student", "Staff"];
   String? _selectedVal = "Student";
@@ -34,7 +34,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: const Text('Sign Up'),
       ),
       body: Center(
         child: Form(
@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
             children: <Widget>[
               TextFormField(
                 controller: _name,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Full Name',
                 ),
                 validator: (value) {
@@ -55,7 +55,7 @@ class _SignUpState extends State<SignUp> {
               ),
               TextFormField(
                 controller: _idno,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'College Id No.',
                 ),
                 validator: (value) {
@@ -80,13 +80,13 @@ class _SignUpState extends State<SignUp> {
                     _selectedVal = val as String;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Select your role',
                 ),
               ),
               TextFormField(
                 controller: _email,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'E-mail Id',
                 ),
                 validator: (value) {
@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> {
               ),
               TextFormField(
                 controller: _pass,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                 ),
                 validator: (value) {
@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
               ),
               ElevatedButton(
                 onPressed: _signUp,
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),
@@ -146,7 +146,7 @@ class _SignUpState extends State<SignUp> {
           email, password, collegeidno, name, _selectedVal);
       print('User is successfully created');
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Welcome()));
+          context, MaterialPageRoute(builder: (context) => const Welcome()));
     } else {
       print('Some error occured');
     }

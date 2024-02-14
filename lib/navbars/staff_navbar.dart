@@ -11,13 +11,13 @@ class StaffNavbar extends StatelessWidget {
       child: ListView(
         children: [
           ListTile(
-              title: Text('Clubs info'),
+              title: const Text('Clubs info'),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ClubsInfo()))),
+                  MaterialPageRoute(builder: (context) => const ClubsInfo()))),
           ListTile(
-              title: Text('Open PRs'),
-              onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => OpenPrs()))),
+              title: const Text('Open PRs'),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const OpenPrs()))),
         ],
       ),
     );

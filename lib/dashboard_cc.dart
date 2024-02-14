@@ -23,8 +23,8 @@ class _DashboardCcState extends State<DashboardCc> {
             icon: const Icon(Icons.logout),
             onPressed: () {
               FirebaseAuth.instance.signOut();
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Welcome()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Welcome()));
             },
           ),
         ],

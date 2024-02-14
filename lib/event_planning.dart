@@ -179,8 +179,10 @@ class _EventPlanningState extends State<EventPlanning> {
                   } else {
                     print('Some error occured');
                   }
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DashboardCc()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardCc()));
                 },
                 child: const Text('Submit'),
               ),
