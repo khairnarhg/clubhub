@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club_hub/cc_management.dart';
-import 'package:club_hub/event_planning.dart';
-import 'package:club_hub/post_invitation.dart';
-import 'package:club_hub/release_p_r.dart';
+
 import 'package:club_hub/clubs_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -116,30 +114,9 @@ class _stNavbarState extends State<stNavbar> {
               }
             },
           ),
-          ListTile(
-            title: Text('Post Invitation'),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PostInvitation()),
-            ),
-          ),
-          // Display the current user's ID
+          
 
-          ListTile(
-              title: Text('Release PR'),
-              onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ReleasePR()))
-                  }),
-          ListTile(
-            title: Text('Event Planning'),
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventPlanning()))
-            },
-          ),
-
-          // Add a ListTile for cc management if the user is a core committee member
+          
 
           ListTile(
             title: Text('CC Management'),
@@ -151,7 +128,7 @@ class _stNavbarState extends State<stNavbar> {
               print(is_ccmember);
               if (is_ccmember == true) {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ccManagement(docuementId: DocumentId ,)));
+                    MaterialPageRoute(builder: (context) => ccManagement(DocumentId: '$DocumentId',)));
               } else {
                 showNotMemberDialog(context, 'You are not a member of any cc');
               }

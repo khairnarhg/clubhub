@@ -20,7 +20,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Search'),
+        title: const Text('Search for Students'),
       ),
       body: Column(
         children: <Widget>[
@@ -58,6 +58,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(docs[index]['fullName']),
+                      onTap: ()=>{   },
                     );
                   },
                 );
