@@ -29,13 +29,13 @@ class CcNavbar extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => EventPlanning()))
             },
           ),
-          ListTile(
-            title: Text('Post Invitation'),
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PostInvitation()))
-            },
-          ),
+          // ListTile(
+          //   title: Text('Post Invitation'),
+          //   onTap: () => {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => PostInvitation()))
+          //   },
+          // ),
         ],
       ),
     );

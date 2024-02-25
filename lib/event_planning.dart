@@ -19,6 +19,7 @@ class _EventPlanningState extends State<EventPlanning> {
   final TextEditingController _sname = TextEditingController();
   final TextEditingController _edesc = TextEditingController();
   final TextEditingController _efees = TextEditingController();
+  final TextEditingController _eId = TextEditingController();
 
   @override
   void dispose() {
@@ -30,6 +31,7 @@ class _EventPlanningState extends State<EventPlanning> {
     _sname.dispose();
     _edesc.dispose();
     _efees.dispose();
+    _eId.dispose();
     super.dispose();
   }
 
@@ -44,6 +46,19 @@ class _EventPlanningState extends State<EventPlanning> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              Text('Enter "NA" if any field is not applicable'),
+              TextFormField(
+                controller: _eId,
+                decoration: const InputDecoration(
+                  labelText: 'Event Id',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'This field is mandatory';
+                  }
+                  return null;
+                },
+              ),
               TextFormField(
                 controller: _ename,
                 decoration: const InputDecoration(
@@ -142,6 +157,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  String eventId= _eId.text;
                   String eventname = _ename.text;
                   String eventdate = _edate.text;
                   String eventvenue = _evenue.text;
@@ -152,6 +168,7 @@ class _EventPlanningState extends State<EventPlanning> {
                   String eventfees = _efees.text;
 
                   eventPlanning request = eventPlanning(
+                    eventId: eventId,
                     eventname: eventname,
                     eventdate: eventdate,
                     eventvenue: eventvenue,
@@ -163,8 +180,9 @@ class _EventPlanningState extends State<EventPlanning> {
                   );
 
                   await FirebaseFirestore.instance
-                      .collection('Event_info')
+                      .collection('clubs')
                       .add({
+                    'eventId': request.eventId,
                     'eventName': request.eventname,
                     'eventdate': request.eventdate,
                     'eventvenue': request.eventvenue,
@@ -195,6 +213,7 @@ class _EventPlanningState extends State<EventPlanning> {
 }
 
 class eventPlanning {
+  final String eventId;
   final String eventname;
   final String eventdate;
   final String eventvenue;
@@ -205,6 +224,7 @@ class eventPlanning {
   final String eventfees;
 
   eventPlanning({
+    required this.eventId,
     required this.eventname,
     required this.eventdate,
     required this.eventvenue,

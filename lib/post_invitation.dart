@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostInvitation extends StatefulWidget {
-  const PostInvitation({super.key});
+  final String clubId;
+  const PostInvitation({Key? key, required this.clubId}) : super(key: key);
 
   @override
   State<PostInvitation> createState() => _PostInvitationState();
@@ -16,6 +17,7 @@ class _PostInvitationState extends State<PostInvitation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String imageUrl = '';
   final TextEditingController _caption = TextEditingController();
+
   // @override
   // void initState() {
   //   super.initState();
@@ -134,11 +136,25 @@ class _PostInvitationState extends State<PostInvitation> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   String capt = _caption.text;
+
+                  DocumentReference<Map<String, dynamic>> documentref =
+                      FirebaseFirestore.instance
+                          .collection('clubs')
+                          .doc(widget.clubId);
+
+                  DocumentSnapshot<Map<String, dynamic>> docsnapshot =
+                      await documentref.get();
+                  String clubName = docsnapshot.data()?['Club_Name'];
                   Map<String, String> datatosend = {
+                    'clubName': clubName,
                     'caption': capt,
                     'image': imageUrl,
                   };
                   FirebaseFirestore.instance
+                      .collection('clubs')
+                      .doc(widget.clubId)
+                      .collection('Events')
+                      .doc('220101')
                       .collection('Invitations')
                       .add(datatosend);
 
@@ -147,9 +163,9 @@ class _PostInvitationState extends State<PostInvitation> {
                 }
 
                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DashboardStudent()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DashboardStudent()));
               },
               child: const Text('Post'),
             ),

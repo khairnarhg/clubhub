@@ -49,6 +49,7 @@ class ccManagement extends StatelessWidget {
               itemBuilder: (context, index) {
                 var clubName = snapshot.data!.docs[index].data()['Club_name'];
                 var position = snapshot.data!.docs[index].data()['Position'];
+                var clubId = snapshot.data!.docs[index].data()['Club Id'];
                 return ListTile(
                   title: Text(clubName),
                   onTap: () {
@@ -57,7 +58,7 @@ class ccManagement extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => clubDuties()));
+                              builder: (context) => clubDuties(clubId: '$clubId',)));
                     }
                   },
                 );
