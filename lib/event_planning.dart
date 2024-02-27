@@ -46,7 +46,7 @@ class _EventPlanningState extends State<EventPlanning> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              Text('Enter "NA" if any field is not applicable'),
+              const Text('Enter "NA" if any field is not applicable'),
               TextFormField(
                 controller: _eId,
                 decoration: const InputDecoration(
@@ -157,7 +157,7 @@ class _EventPlanningState extends State<EventPlanning> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  String eventId= _eId.text;
+                  String eventId = _eId.text;
                   String eventname = _ename.text;
                   String eventdate = _edate.text;
                   String eventvenue = _evenue.text;
@@ -179,9 +179,7 @@ class _EventPlanningState extends State<EventPlanning> {
                     eventfees: eventfees,
                   );
 
-                  await FirebaseFirestore.instance
-                      .collection('clubs')
-                      .add({
+                  await FirebaseFirestore.instance.collection('clubs').add({
                     'eventId': request.eventId,
                     'eventName': request.eventname,
                     'eventdate': request.eventdate,

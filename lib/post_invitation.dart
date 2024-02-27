@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 class PostInvitation extends StatefulWidget {
   final String clubId;
-  const PostInvitation({Key? key, required this.clubId}) : super(key: key);
+  const PostInvitation({super.key, required this.clubId});
 
   @override
   State<PostInvitation> createState() => _PostInvitationState();
@@ -40,7 +40,7 @@ class _PostInvitationState extends State<PostInvitation> {
     XFile imageTemp = image;
 
     setState(() {
-      this.images = imageTemp;
+      images = imageTemp;
     });
   }
 

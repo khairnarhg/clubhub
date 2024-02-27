@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashboardStudent extends StatefulWidget {
-  const DashboardStudent({Key? key}) : super(key: key);
+  const DashboardStudent({super.key});
 
   @override
   State<DashboardStudent> createState() => _DashboardStudentState();
@@ -32,12 +32,12 @@ class _DashboardStudentState extends State<DashboardStudent> {
           in gettingAllDocs.docs) {
         String clubId = docSnapshot.id;
 
-        QuerySnapshot<Map<String, dynamic>> eventsDocs =
-            await FirebaseFirestore.instance
-                .collection('clubs')
-                .doc(clubId)
-                .collection('Events')
-                .get();
+        QuerySnapshot<Map<String, dynamic>> eventsDocs = await FirebaseFirestore
+            .instance
+            .collection('clubs')
+            .doc(clubId)
+            .collection('Events')
+            .get();
         for (QueryDocumentSnapshot<Map<String, dynamic>> eventsDocSnapshot
             in eventsDocs.docs) {
           String eventsDocId = eventsDocSnapshot.id;
@@ -86,7 +86,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
         future: _invitations,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -112,7 +112,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                       Text(caption ?? 'No Caption'),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('Register Now'),
+                        child: const Text('Register Now'),
                       ),
                     ],
                   ),
@@ -120,7 +120,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
               },
             );
           } else {
-            return Center(
+            return const Center(
               child: Text('No data available'),
             );
           }
@@ -129,6 +129,3 @@ class _DashboardStudentState extends State<DashboardStudent> {
     );
   }
 }
-
-
-

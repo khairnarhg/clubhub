@@ -13,20 +13,24 @@ class CcNavbar extends StatelessWidget {
       child: ListView(
         children: [
           ListTile(
-              title: Text('Clubs info'),
+              title: const Text('Clubs info'),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ClubsInfo()))),
+                  MaterialPageRoute(builder: (context) => const ClubsInfo()))),
           ListTile(
-              title: Text('Release PR'),
+              title: const Text('Release PR'),
               onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ReleasePR()))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ReleasePR()))
                   }),
           ListTile(
-            title: Text('Event Planning'),
+            title: const Text('Event Planning'),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventPlanning()))
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EventPlanning()))
             },
           ),
           // ListTile(

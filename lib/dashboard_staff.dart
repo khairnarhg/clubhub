@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/navbars/cc_navbar.dart';
 import 'package:club_hub/welcome.dart';
 import 'package:club_hub/navbars/staff_navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class DashboardStaff extends StatefulWidget {
-  const DashboardStaff({Key? key}) : super(key: key);
+  const DashboardStaff({super.key});
 
   @override
   State<DashboardStaff> createState() => _DashboardStaffState();
 }
 
 class _DashboardStaffState extends State<DashboardStaff> {
-late Future<List<Map<String, dynamic>>> _invitations;
+  late Future<List<Map<String, dynamic>>> _invitations;
 
   @override
   void initState() {
@@ -33,12 +31,12 @@ late Future<List<Map<String, dynamic>>> _invitations;
           in gettingAllDocs.docs) {
         String clubId = docSnapshot.id;
 
-        QuerySnapshot<Map<String, dynamic>> eventsDocs =
-            await FirebaseFirestore.instance
-                .collection('clubs')
-                .doc(clubId)
-                .collection('Events')
-                .get();
+        QuerySnapshot<Map<String, dynamic>> eventsDocs = await FirebaseFirestore
+            .instance
+            .collection('clubs')
+            .doc(clubId)
+            .collection('Events')
+            .get();
         for (QueryDocumentSnapshot<Map<String, dynamic>> eventsDocSnapshot
             in eventsDocs.docs) {
           String eventsDocId = eventsDocSnapshot.id;
@@ -87,7 +85,7 @@ late Future<List<Map<String, dynamic>>> _invitations;
         future: _invitations,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -113,7 +111,7 @@ late Future<List<Map<String, dynamic>>> _invitations;
                       Text(caption ?? 'No Caption'),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('Register Now'),
+                        child: const Text('Register Now'),
                       ),
                     ],
                   ),
@@ -121,7 +119,7 @@ late Future<List<Map<String, dynamic>>> _invitations;
               },
             );
           } else {
-            return Center(
+            return const Center(
               child: Text('No data available'),
             );
           }

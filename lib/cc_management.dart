@@ -29,13 +29,13 @@ class ccManagement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CC Management'),
+        title: const Text('CC Management'),
       ),
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
         future: accessCcInfo(DocumentId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -58,7 +58,9 @@ class ccManagement extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => clubDuties(clubId: '$clubId',)));
+                              builder: (context) => ClubDuties(
+                                    clubId: '$clubId',
+                                  )));
                     }
                   },
                 );
