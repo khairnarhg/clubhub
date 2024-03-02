@@ -1,3 +1,4 @@
+import 'package:club_hub/document_retrieval.dart';
 import 'package:club_hub/dynamic_reg_form.dart';
 import 'package:club_hub/event_planning.dart';
 import 'package:club_hub/post_invitation.dart';
@@ -65,6 +66,14 @@ class ClubDuties extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => UploadMeetingDocs(clubId: clubId)),
+            ),
+          ),
+          ListTile(
+            title: const Text('Retrieve Documents'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DocumentRetrieval(clubId: clubId)),
             ),
           ),
           ListTile(

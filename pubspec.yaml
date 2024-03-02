@@ -43,7 +43,12 @@ dependencies:
   image_picker: ^1.0.7
   path_provider: ^2.1.2
   file_picker: ^6.1.1
+<<<<<<< HEAD
   firebase_messaging: ^14.7.17
+=======
+  path: ^1.8.3
+  intl: ^0.18.1
+>>>>>>> 2380cdf853567083dbf4fa9976bc74da7d746df9
 
 dev_dependencies:
   flutter_test:
