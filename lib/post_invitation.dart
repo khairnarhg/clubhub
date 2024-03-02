@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 class PostInvitation extends StatefulWidget {
   final String clubId;
   const PostInvitation({super.key, required this.clubId});
-
   @override
   State<PostInvitation> createState() => _PostInvitationState();
 }
@@ -17,13 +16,11 @@ class _PostInvitationState extends State<PostInvitation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String imageUrl = '';
   final TextEditingController _caption = TextEditingController();
-
   // @override
   // void initState() {
   //   super.initState();
   //   _caption = TextEditingController();
   // }
-
   @override
   void dispose() {
     _caption.dispose();
@@ -31,11 +28,9 @@ class _PostInvitationState extends State<PostInvitation> {
   }
 
   XFile? images;
-
   Future getImage(ImageSource source) async {
     XFile? image = await ImagePicker().pickImage(source: source);
     print('${image?.path}');
-
     if (image == null) return;
     XFile imageTemp = image;
 
@@ -91,7 +86,6 @@ class _PostInvitationState extends State<PostInvitation> {
 
                   Reference referenceImageatoUpload =
                       referenceDirImages.child(uniquefilename);
-
                   try {
                     await referenceImageatoUpload.putFile(
                       File(images!.path),
@@ -100,7 +94,6 @@ class _PostInvitationState extends State<PostInvitation> {
                     imageUrl = await referenceImageatoUpload.getDownloadURL();
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Image uploaded')));
-
                     print(imageUrl);
                   } catch (error) {
                     print('error uploading file');
@@ -141,7 +134,6 @@ class _PostInvitationState extends State<PostInvitation> {
                       FirebaseFirestore.instance
                           .collection('clubs')
                           .doc(widget.clubId);
-
                   DocumentSnapshot<Map<String, dynamic>> docsnapshot =
                       await documentref.get();
                   String clubName = docsnapshot.data()?['Club_Name'];
@@ -161,7 +153,6 @@ class _PostInvitationState extends State<PostInvitation> {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(const SnackBar(content: Text('Posted')));
                 }
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(

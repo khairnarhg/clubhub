@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'file_upload.dart'; // Import the file_upload.dart file
+import 'file_upload.dart';
 
 class UploadMeetingDocs extends StatefulWidget {
   final String clubId;
@@ -36,12 +36,6 @@ class _UploadMeetingDocsState extends State<UploadMeetingDocs> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _fileNameController,
-              decoration: const InputDecoration(
-                labelText: 'Enter file name',
-              ),
-            ),
             ElevatedButton(
               onPressed: pickFile,
               child: const Text('Pick File'),

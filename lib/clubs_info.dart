@@ -55,7 +55,8 @@ class _ClubsInfoState extends State<ClubsInfo> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MembershipForm()));
+                            builder: (context) =>
+                                const MembershipForm(clubId: "225643")));
                   },
                   child: const Text('Apply for membership')),
             ),
