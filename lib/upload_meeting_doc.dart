@@ -11,8 +11,6 @@ class UploadMeetingDocs extends StatefulWidget {
 }
 
 class _UploadMeetingDocsState extends State<UploadMeetingDocs> {
-  TextEditingController _fileNameController = TextEditingController();
-
   @override
   void initState() {
     super.initState();

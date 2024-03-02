@@ -116,6 +116,12 @@ class _DashboardStudentState extends State<DashboardStudent> {
                       ),
                     ],
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CommentScreen()));
+                  },
                 );
               },
             );
