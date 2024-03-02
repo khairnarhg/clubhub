@@ -1,28 +1,58 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:club_hub/dashboard_staff.dart';
-
 import 'package:flutter/material.dart';
 
-class OpenPrs extends StatefulWidget {
-  const OpenPrs({super.key});
-
+class PermissionRequestsScreenStudents extends StatelessWidget {
+  final String clubId;
+  const PermissionRequestsScreenStudents({
+    required this.clubId,
+  });
   @override
-  State<OpenPrs> createState() => _OpenPrsState();
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2, // Number of tabs
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Permission Requests'),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Pending'),
+              Tab(text: 'Approved'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            //     //     Pending requests tab
+            PermissionRequestsTab(
+              status: 'pending',
+              clubId: clubId,
+            ),
+            //     //     // Approved requests tab
+            PermissionRequestsTab(status: 'approved', clubId: clubId),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _OpenPrsState extends State<OpenPrs> {
+class PermissionRequestsTab extends StatelessWidget {
+  final String status;
+  final String clubId;
+  PermissionRequestsTab({
+    required this.status,
+    required this.clubId,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Open Prs'),
-      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('permission_Requests')
-            //.where('staffMemberId', isEqualTo: '183727')
-            .where('status', isEqualTo: 'pending')
+            .collection('clubs')
+            .doc(clubId)
+            .collection('permissoin_requests')
+            .where('status', isEqualTo: status)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -36,16 +66,18 @@ class _OpenPrsState extends State<OpenPrs> {
                 String documentId = permissionRequest.id;
 
                 return ListTile(
+                  // title: Text('Artificial Intelligence and Deep Learning Club'),
                   title: Text('Subject: ' + permissionRequest['subject']),
-                  subtitle: Text('Status:  ${permissionRequest['status']}'),
+                subtitle: Text('Status:  ${permissionRequest['status']}'),
                   onTap: () {
-                    // Navigate to a new screen with the description and Approve button
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => PermissionRequestDetailsScreen(
                           documentId: documentId,
                           description: permissionRequest['description'],
+                          clubId: clubId,
+                          status: status,
                         ),
                       ),
                     );
@@ -65,10 +97,14 @@ class _OpenPrsState extends State<OpenPrs> {
 class PermissionRequestDetailsScreen extends StatelessWidget {
   final String documentId;
   final String description;
+  final String clubId;
+  final String status;
 
   const PermissionRequestDetailsScreen({
     required this.documentId,
     required this.description,
+    required this.clubId,
+    required this.status,
   });
 
   @override
@@ -83,17 +119,16 @@ class PermissionRequestDetailsScreen extends StatelessWidget {
             child: Text('Description:' + description),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // Handle approval logic, e.g., update Firestore document status
-              approvePermissionRequest(documentId);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const DashboardStaff()));
-            },
-            child: const Text('Approve'),
+          Center(
+            child: Text('Status:' + status),
           ),
+          // if (status == 'pending')
+          //   ElevatedButton(
+          //     onPressed: () {
+          //       approvePermissionRequest(documentId);
+          //     },
+          //     child: const Text('Approve'),
+          //   ),
         ],
       ),
     );
@@ -102,8 +137,12 @@ class PermissionRequestDetailsScreen extends StatelessWidget {
   // Add logic to update the permission request status to 'approved' in Firestore
   void approvePermissionRequest(String documentId) {
     FirebaseFirestore.instance
-        .collection('permission_Requests')
+        .collection('clubs')
+        .doc(clubId)
+        .collection('permissoin_requests')
         .doc(documentId)
         .update({'status': 'approved'});
   }
 }
+
+

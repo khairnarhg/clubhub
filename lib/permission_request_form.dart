@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_hub/dashboard_cc.dart';
+import 'package:club_hub/club_duties.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PermissionRequestForm extends StatefulWidget {
   final String staffmember;
-  const PermissionRequestForm({Key? key, required this.staffmember})
+  final String clubId;
+  const PermissionRequestForm(
+      {Key? key, required this.staffmember, required this.clubId})
       : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class PermissionRequestForm extends StatefulWidget {
 class _PermissionRequestFormState extends State<PermissionRequestForm> {
   final TextEditingController _subject = TextEditingController();
   final TextEditingController _description = TextEditingController();
+  final TextEditingController _prid = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +27,12 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
       ),
       body: Column(
         children: <Widget>[
+          TextFormField(
+            controller: _prid,
+            decoration:
+                const InputDecoration(labelText: 'Permission Request ID'),
+          ),
+          const SizedBox(height: 16.0),
           TextFormField(
             controller: _subject,
             decoration: const InputDecoration(labelText: 'Subject'),
@@ -39,12 +48,15 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
               String subject = _subject.text;
               String description = _description.text;
               String staffmembernumber = widget.staffmember;
+              String prid = _prid.text;
 
               String? uid = FirebaseAuth.instance.currentUser?.uid;
               String? documentId = await fetchUID(uid!);
               String? ccmemberId = await fetchcollegeid(documentId!);
 
               permissionRequest request = permissionRequest(
+                  clubid: widget.clubId,
+                  prid: prid,
                   staffmemberId: staffmembernumber,
                   subject: subject,
                   description: description,
@@ -52,8 +64,12 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
                   ccmemberId: ccmemberId.toString());
 
               await FirebaseFirestore.instance
-                  .collection('permission_Requests')
+                  .collection('clubs')
+                  .doc(widget.clubId)
+                  .collection('permissoin_requests')
                   .add({
+                'clubid': widget.clubId,
+                'prid': prid,
                 'staffMemberId': request.staffmemberId,
                 'subject': request.subject,
                 'description': request.description,
@@ -61,8 +77,30 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
                 'ccmemberId': request.ccmemberId,
               });
 
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DashboardCc()));
+              QuerySnapshot<Map<String, dynamic>> docs = await FirebaseFirestore
+                  .instance
+                  .collection('users')
+                  .where('collegeId', isEqualTo: staffmembernumber)
+                  .get();
+
+              if (docs.docs.isNotEmpty) {
+                DocumentSnapshot<Map<String, dynamic>> userDoc =
+                    docs.docs.first;
+                CollectionReference<Map<String, dynamic>> newSubcollectionref =
+                    userDoc.reference.collection('permission_requests');
+                await newSubcollectionref.add({
+                  'clubid': widget.clubId,
+                  'prid': prid,
+                  'subject': request.subject,
+                  'description': request.description,
+                  'status': request.status,
+                  'ccmemberId': request.ccmemberId,
+                });
+              }
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ClubDuties(clubId: widget.clubId)));
             },
             child: const Text('Submit'),
           ),
@@ -134,12 +172,17 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
 }
 
 class permissionRequest {
+  final String prid;
+  final String clubid;
+
   final String staffmemberId;
   final String subject;
   final String description;
   final String status;
   final String ccmemberId;
   permissionRequest({
+    required this.clubid,
+    required this.prid,
     required this.staffmemberId,
     required this.subject,
     required this.description,

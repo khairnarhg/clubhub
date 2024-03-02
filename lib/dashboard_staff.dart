@@ -5,7 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashboardStaff extends StatefulWidget {
-  const DashboardStaff({super.key});
+  final String currentDocumentId;
+
+  const DashboardStaff({Key? key, required this.currentDocumentId})
+      : super(key: key);
 
   @override
   State<DashboardStaff> createState() => _DashboardStaffState();
@@ -62,10 +65,15 @@ class _DashboardStaffState extends State<DashboardStaff> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
-      drawer: const StaffNavbar(),
+      drawer: StaffNavbar(
+         currentdocid: widget.currentDocumentId,
+      ),
       appBar: AppBar(
         title: const Text('Welcome staff'),
         actions: [

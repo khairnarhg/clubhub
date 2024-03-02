@@ -1,6 +1,7 @@
 import 'package:club_hub/dynamic_reg_form.dart';
 import 'package:club_hub/event_planning.dart';
 import 'package:club_hub/post_invitation.dart';
+import 'package:club_hub/pr_students.dart';
 import 'package:club_hub/release_p_r.dart';
 import 'package:club_hub/upload_meeting_doc.dart';
 import 'package:club_hub/user_search_screen.dart';
@@ -18,13 +19,13 @@ class ClubDuties extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          ListTile(
-            title: const Text('Add Position'),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => UserSearchScreen()),
-            ),
-          ),
+          // ListTile(
+          //   title: const Text('Add Position'),
+          //   onTap: () => Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => UserSearchScreen()),
+          //   ),
+          // ),
           ListTile(
             title: const Text('Post Invitation'),
             onTap: () => Navigator.push(
@@ -37,16 +38,27 @@ class ClubDuties extends StatelessWidget {
             title: const Text('Release PR'),
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ReleasePR()),
+              MaterialPageRoute(builder: (context) =>  ReleasePR(clubId: clubId)),
+            ),
+          ),
+          ListTile(
+            title: const Text('Permission Requests'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  PermissionRequestsScreenStudents(clubId: clubId)),
             ),
           ),
           ListTile(
             title: const Text('Event Planning'),
-            onTap: () => Navigator.push(
+            onTap: ()=>Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const EventPlanning()),
+              MaterialPageRoute(
+                builder: (context) => EventPlanningPage(clubId: clubId,),
+              ),
+            )
+
             ),
-          ),
+          
           ListTile(
             title: const Text('Upload Meeting Documents'),
             onTap: () => Navigator.push(

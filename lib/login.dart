@@ -108,6 +108,7 @@ class _LoginState extends State<Login> {
         // Retrieve data from the document
         Map<String, dynamic> userData = userSnapshot.data()!;
         String? role = userData['role'];
+        
 
         // Use the retrieved data
         print('Role: $role');
@@ -118,8 +119,12 @@ class _LoginState extends State<Login> {
               MaterialPageRoute(
                   builder: (context) => const DashboardStudent()));
         } else {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const DashboardStaff()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DashboardStaff(
+                        currentDocumentId: '${documentId}',
+                      )));
         }
 
         // Return the document ID

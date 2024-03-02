@@ -3,7 +3,8 @@ import 'package:club_hub/permission_request_form.dart';
 import 'package:flutter/material.dart';
 
 class ReleasePR extends StatefulWidget {
-  const ReleasePR({super.key});
+  final String clubId;
+  const ReleasePR({Key? key, required this.clubId}) : super(key:key);
 
   @override
   State<ReleasePR> createState() => _ReleasePRState();
@@ -37,6 +38,7 @@ class _ReleasePRState extends State<ReleasePR> {
                           MaterialPageRoute(
                               builder: (context) => PermissionRequestForm(
                                     staffmember: '${staffMember['collegeId']}',
+                                    clubId: widget.clubId
                                   )));
                     });
               },
