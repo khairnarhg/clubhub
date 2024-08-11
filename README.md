@@ -1,6 +1,6 @@
 # club_hub
 
-A new Flutter project.
+Flutter project making app for College Club Management.
 
 ## Getting Started
 
